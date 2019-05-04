@@ -87,10 +87,25 @@
   </div>
   <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
   <script>
-    $('#signUpForm').on('submit',(e)=>{
-      e.preventDefault;
-
-    })
+    $('#signInForm').on('submit',(e)=>{
+      e.preventDefault();
+      let hash = {};
+      let need = ['email','password'];
+      need.forEach((name)=>{
+        let value = $('#signInForm').find(`[name=${name}]`).val();
+        hash[name] = value;
+      });
+      $.post('/signin',hash)
+        .then(
+          (request)=>{window.location.href = '/';},
+          (request)=>{
+          //let {errors} = JSON.parse(request.responseText);或者如下
+            let {errors} = request.responseJSON;
+            if(errors.password && errors.password === 'unmatch'){
+              console.log('邮箱与密码不匹配！');
+            }
+          });
+      });
   </script>
 </body>
 </html>

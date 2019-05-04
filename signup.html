@@ -109,6 +109,8 @@
               console.log('你的邮箱输错了！');
             }else if(errors.password && errors.password === 'unmatch'){
               console.log('密码不匹配！');
+            }else if(errors.email && errors.email === 'inuse'){
+              console.log('邮箱已经被使用！');
             }
           });
       });
